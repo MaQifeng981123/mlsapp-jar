@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rt.generalframework.mapper.ExamsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rt.generalframework.entity.Exams">
+        <id column="exam_id" property="examId"/>
+        <result column="exam_data" property="examData"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="upload_date" property="uploadDate"/>
+        <result column="upload_flag" property="uploadFlag"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        exam_id, exam_data, CREATE_DATE, upload_date, upload_flag, user_id
+    </sql>
+    <update id="updateExamFlag" parameterType="com.rt.generalframework.entity.Exams">
+        update exams set upload_Flag=#{uploadFlag} where exam_Id=#{examId} and user_id =#{userId}
+    </update>
+    <select id="getStatistics" resultType="com.rt.generalframework.entity.Exams">
+        select * from exams where user_id =#{userId} order by CREATE_DATE asc limit 0,7
+    </select>
+
+</mapper>

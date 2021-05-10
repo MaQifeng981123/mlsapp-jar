@@ -1,0 +1,15 @@
+#英文字符集时开启
+#spring.datasource.druid.connection-properties: clientEncoding: GBK;serverEncoding: ISO-8859-1;
+#数据源配置
+spring.datasource.druid.driver-class-name: com.mysql.cj.jdbc.Driver
+spring.datasource.druid.url: jdbc:mysql://121.4.243.61:3306/mslapp?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+spring.datasource.druid.username: root
+spring.datasource.druid.password: root
+server.port: 8086
+server:
+  servlet:
+    context-path: /mlsapp
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 20

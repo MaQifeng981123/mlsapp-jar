@@ -1,0 +1,95 @@
+spring:
+  #dev开发环境 test测试环境 prod正式环境
+  profiles:
+    active: prod
+  #数据源配置
+  datasource:
+    druid:
+      #配置初始化大小、最小、最大 是否异步创建
+      initial-size: 10
+      min-idle: 10
+      max-active: 50
+      async-init: true
+      keep-alive: true
+      #配置获取连接等待超时的时间
+      max-wait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 2000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 600000
+      max-evictable-idle-time-millis: 900000
+      #有效性检测 如果数据库不稳定 那么开启test-on-borrow为true
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      #web监控地址：http://ip:port/druid
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        login-username: rt
+        login-password: rt2019@
+      filters: stat,encoding
+      filter:
+        stat:
+          enabled: true
+          db-type: oracle
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        encoding:
+          enabled: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      FAIL_ON_EMPTY_BEANS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    default-property-inclusion: non_empty
+    mapper:
+      PROPAGATE_TRANSIENT_MARKER: true
+    parser:
+      ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER: true
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  aop:
+    proxy-target-class: true
+    auto: true
+#mybatis plus
+mybatis-plus:
+  mapper-locations: com/rt/generalframework/mapper/xml/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.rt.generalframework.entity,com.rt.generalframework.dto
+  global-config:
+    db-config:
+      #SQL统一查询大写
+      capital-mode: true
+      field-strategy: not_empty
+      id-type: INPUT
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    log-impl: com.rt.mybatisplus.LogbackImpl
+#server tomcat配置
+server:
+  servlet:
+    context-path: /general
+    session:
+      cookie:
+        http-only: true
+  use-forward-headers: true
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 500
+    min-spare-threads: 20
+#开启健康监控端点
+management:
+  endpoint:
+    health:
+      show-details: always
+
